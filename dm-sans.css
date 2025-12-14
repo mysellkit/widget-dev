@@ -4,7 +4,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./fonts/dm-sans-v17-latin-regular.woff2') format('woff2');
+  src: url('./font/dm-sans-v17-latin-regular.woff2') format('woff2');
 }
 
 /* DM Sans - Medium (500) */
@@ -13,7 +13,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('./fonts/dm-sans-v17-latin-500.woff2') format('woff2');
+  src: url('./font/dm-sans-v17-latin-500.woff2') format('woff2');
 }
 
 /* DM Sans - Semi-Bold (600) */
@@ -22,5 +22,5 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('./fonts/dm-sans-v17-latin-600.woff2') format('woff2');
+  src: url('./font/dm-sans-v17-latin-600.woff2') format('woff2');
 }
