@@ -11,7 +11,7 @@
   const CONFIG = {
     API_BASE: 'https://mysellkit.com/api/1.1/wf',
     CHECKOUT_BASE: 'https://mysellkit.com',
-    VERSION: '1.3.1',
+    VERSION: '1.3.2',
     SESSION_DURATION: 86400000, // 24h in ms
     TOAST_DURATION: 5000
   };
@@ -178,6 +178,7 @@
 
   function lockBodyScroll() {
     const scrollY = window.scrollY;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
     if (window.lenis) {
       window.lenis.stop();
@@ -193,12 +194,14 @@
       height: '100vh',
       position: 'fixed',
       width: '100%',
-      top: `-${scrollY}px`
+      top: `-${scrollY}px`,
+      paddingRight: `${scrollbarWidth}px`
     });
 
     document.body.setAttribute('data-mysellkit-popup-open', 'true');
     window.mysellkitScrollY = scrollY;
-    debugLog('📍', `Scroll position preserved: ${scrollY}px`);
+    window.mysellkitScrollbarWidth = scrollbarWidth;
+    debugLog('📍', `Scroll position preserved: ${scrollY}px, scrollbar width: ${scrollbarWidth}px`);
   }
 
   function unlockBodyScroll() {
@@ -218,12 +221,14 @@
       height: '',
       position: '',
       width: '',
-      top: ''
+      top: '',
+      paddingRight: ''
     });
 
     document.body.removeAttribute('data-mysellkit-popup-open');
     window.scrollTo(0, scrollY);
     delete window.mysellkitScrollY;
+    delete window.mysellkitScrollbarWidth;
     debugLog('📍', `Scroll position restored: ${scrollY}px`);
   }
 
@@ -592,17 +597,17 @@
         background: rgba(0, 0, 0, 0.06);
         border: none;
         border-radius: 50%;
-        font-size: 20px;
-        line-height: 1 !important;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 100;
         padding: 0 !important;
         margin: 0 !important;
-        cursor: pointer;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        transition: all 0.2s ease;
-        z-index: 100;
-        color: #4B5563;
+        font-size: 20px !important;
+        line-height: 32px !important;
+        color: #4B5563 !important;
         font-family: system-ui, -apple-system, sans-serif !important;
         font-weight: 300 !important;
         text-align: center !important;
@@ -617,7 +622,7 @@
         width: 450px;
         height: 600px;
         background: var(--msk-left-bg, #FFFFFF);
-        padding: 24px;
+        padding: 24px 24px 24px 24px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -653,7 +658,7 @@
         font-family: 'DM Sans', 'Apple Color Emoji', 'Segoe UI Emoji', -apple-system, BlinkMacSystemFont, sans-serif !important;
         font-weight: 600 !important;
         font-size: 24px !important;
-        line-height: 1.3 !important;
+        line-height: 1.4 !important;
         letter-spacing: -0.5px !important;
         color: var(--msk-text-color, #1F2937) !important;
         display: -webkit-box !important;
@@ -661,7 +666,7 @@
         -webkit-box-orient: vertical !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
-        max-height: 62px !important;
+        max-height: 67px !important;
       }
 
       .mysellkit-bottom-section {
@@ -927,12 +932,9 @@
         align-items: center;
         gap: 12px;
         transition: all 0.2s ease;
-        border: 1px solid rgba(0, 0, 0, 0.04);
       }
       .mysellkit-included-item:hover {
-        transform: translateX(4px);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-        border-color: rgba(0, 0, 0, 0.08);
+        transform: translateX(2px);
       }
 
       .mysellkit-file-icon {
@@ -945,9 +947,7 @@
         justify-content: center;
         font-size: 18px !important;
         flex-shrink: 0;
-        transition: transform 0.2s ease;
       }
-      .mysellkit-included-item:hover .mysellkit-file-icon { transform: scale(1.1); }
 
       .mysellkit-file-name {
         font-family: 'DM Sans', 'Apple Color Emoji', 'Segoe UI Emoji', -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -979,7 +979,7 @@
         width: 320px;
         background: white;
         border-radius: var(--msk-radius-lg);
-        padding: 14px;
+        padding: 14px 14px 14px 14px;
         box-shadow: var(--msk-shadow-md), var(--msk-shadow-sm);
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1155,7 +1155,7 @@
           flex-direction: column;
           gap: 32px;
           margin-bottom: 0;
-          padding-bottom: 0;
+          padding-bottom: 8px;
         }
 
         .mysellkit-bottom-section {
@@ -1189,7 +1189,7 @@
           right: 0;
           width: 100%;
           border-radius: var(--msk-radius-lg) var(--msk-radius-lg) 0 0;
-          padding: 14px 20px;
+          padding: 14px 14px 14px 14px;
           box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
         }
         .mysellkit-floating-widget:hover { transform: translateY(-2px); }
