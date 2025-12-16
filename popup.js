@@ -1794,6 +1794,13 @@
       document.head.appendChild(meta);
     }
 
+    const permissionsMeta = document.createElement('meta');
+    permissionsMeta.httpEquiv = 'Permissions-Policy';
+    permissionsMeta.content = 'browsing-topics=(), interest-cohort=()';
+    if (!document.querySelector('meta[http-equiv="Permissions-Policy"]')) {
+      document.head.appendChild(permissionsMeta);
+    }
+
     debugLog('🚀', `MySellKit Popup v${CONFIG.VERSION} initializing...`);
 
     if (!POPUP_ID) {
